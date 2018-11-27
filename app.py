@@ -31,6 +31,14 @@ def find_client(group_list, client_index):
                 break
     return group, client_index
 
+@func_router.after_request
+def add_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'POST, PUT, GET, OPTIONS, DELETE'
+    response.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
+    response.headers['Access-Control-Max-Age'] = '3600'
+    return response
+
 @func_router.route('/list', methods=['GET'])
 def node_list():
     loader.load_profile()
